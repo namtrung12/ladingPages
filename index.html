@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MotionForge 3D | Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050711;
+      --bg-2: #090d1f;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-strong: rgba(255, 255, 255, 0.08);
+      --stroke: rgba(255, 255, 255, 0.08);
+      --accent: #7af3ff;
+      --accent-2: #ff7ad1;
+      --accent-3: #f6c452;
+      --text: #e6edf6;
+      --muted: #9eb1c7;
+      --shadow: 0 25px 60px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --radius-lg: 28px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(122,243,255,0.12), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(255,122,209,0.10), transparent 35%),
+                  linear-gradient(145deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .page {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* floating background shapes */
+    .halo {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      filter: blur(60px);
+      z-index: 0;
+      opacity: 0.6;
+    }
+    .halo span {
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,122,209,0.45), transparent 45%);
+      animation: drift 16s ease-in-out infinite;
+    }
+    .halo span:nth-child(1) { left: 4%; top: 12%; }
+    .halo span:nth-child(2) { right: 12%; top: 2%; background: radial-gradient(circle, rgba(122,243,255,0.38), transparent 40%); animation-duration: 18s; }
+    .halo span:nth-child(3) { right: 6%; bottom: 10%; background: radial-gradient(circle, rgba(246,196,82,0.32), transparent 40%); animation-duration: 20s; }
+    @keyframes drift { 0%,100% { transform: translateY(0) } 50% { transform: translateY(24px) translateX(-8px); } }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, rgba(5,7,17,0.92), rgba(5,7,17,0.55) 65%, rgba(5,7,17,0));
+      backdrop-filter: blur(14px);
+      z-index: 10;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Syne', 'Space Grotesk', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .logo-mark {
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background: conic-gradient(from 120deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+      display: grid; place-items: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    nav { display: flex; gap: 18px; color: var(--muted); font-size: 15px; }
+    nav a { padding: 8px 12px; border-radius: 12px; transition: color .2s, background .2s; }
+    nav a:hover { color: var(--text); background: var(--card); }
+
+    .pill { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 999px; background: rgba(122,243,255,0.12); color: var(--accent); font-size: 13px; letter-spacing: 0.2px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      padding: 40px 0 28px;
+      align-items: center;
+    }
+    .hero h1 { font-family: 'Syne', 'Space Grotesk', sans-serif; font-size: clamp(32px, 6vw, 58px); line-height: 1.05; margin: 12px 0; }
+    .hero p { color: var(--muted); max-width: 520px; line-height: 1.6; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 10px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 12px 18px; border-radius: 14px; border: 1px solid transparent;
+      font-weight: 600; letter-spacing: 0.2px; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease, border .2s, background .2s;
+    }
+    .btn.primary { background: linear-gradient(120deg, var(--accent), var(--accent-2)); color: #041014; box-shadow: 0 15px 40px rgba(122,243,255,0.32); }
+    .btn.primary:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 18px 45px rgba(255,122,209,0.35); }
+    .btn.ghost { color: var(--text); border-color: var(--stroke); background: var(--card); }
+    .btn.ghost:hover { border-color: rgba(255,255,255,0.18); }
+
+    .hero__metrics { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 12px; margin-top: 18px; }
+    .metric { padding: 12px 14px; border: 1px solid var(--stroke); border-radius: var(--radius); background: var(--card); }
+    .metric strong { display: block; font-size: 22px; margin-bottom: 4px; }
+    .metric span { color: var(--muted); font-size: 14px; }
+
+    .hero__visual {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+    }
+    .visual-shell {
+      position: relative;
+      width: 100%; max-width: 420px; aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      background: linear-gradient(140deg, rgba(255,122,209,0.12), rgba(122,243,255,0.10));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .visual-shell::after {
+      content: "";
+      position: absolute; inset: 22% 16%;
+      background: radial-gradient(circle at 30% 30%, rgba(122,243,255,0.4), transparent 48%),
+                  radial-gradient(circle at 70% 40%, rgba(255,122,209,0.45), transparent 42%),
+                  radial-gradient(circle at 50% 75%, rgba(246,196,82,0.35), transparent 40%);
+      filter: blur(20px);
+      z-index: 0;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.04);} }
+
+    .model-card {
+      position: relative; z-index: 1;
+      background: rgba(8,11,24,0.85);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 16px;
+      color: var(--text);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      margin-bottom: 12px;
+      animation: float 6s ease-in-out infinite;
+    }
+    .model-card:nth-child(2) { animation-delay: .8s; }
+    .model-card:nth-child(3) { animation-delay: 1.4s; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .model-top { display: flex; align-items: center; gap: 12px; }
+    .model-avatar {
+      width: 58px; height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(122,243,255,0.18), rgba(255,122,209,0.28));
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .model-avatar::after {
+      content: ""; position: absolute; inset: 20%; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #7af3ff 0%, rgba(122,243,255,0) 58%),
+                  radial-gradient(circle at 65% 55%, #ff7ad1 0%, rgba(255,122,209,0) 58%);
+      filter: blur(2px);
+    }
+    .model-name { font-weight: 600; }
+    .tag { display: inline-flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.06); color: var(--muted); font-size: 12px; }
+    .card-meta { display: flex; gap: 10px; margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .small-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; margin-right: 6px; }
+
+    .section {
+      margin: 56px 0 26px;
+    }
+    .section-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+    .section h2 { font-family: 'Syne', 'Space Grotesk', sans-serif; margin: 0; font-size: clamp(24px, 4vw, 36px); }
+    .section p.sub { color: var(--muted); max-width: 700px; line-height: 1.6; margin: 8px 0 0; }
+
+    .grid { display: grid; gap: 18px; }
+    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+    .showcase-card {
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+      background: linear-gradient(160deg, rgba(255,122,209,0.12), rgba(8,9,20,0.9));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .showcase-card::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background: conic-gradient(from 120deg, rgba(122,243,255,0.35), rgba(255,122,209,0.35), rgba(246,196,82,0.35), rgba(122,243,255,0.35));
+      filter: blur(80px);
+      opacity: 0.35;
+    }
+    .showcase-card .label { color: var(--accent-3); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+    .showcase-card .style { font-weight: 600; margin: 6px 0; }
+    .showcase-card .meta { color: var(--muted); font-size: 13px; }
+
+    .timeline { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 52px 1fr; gap: 12px; align-items: center; padding: 12px; border-radius: var(--radius); border: 1px solid var(--stroke); background: rgba(255,255,255,0.03); }
+    .step .icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(122,243,255,0.18), rgba(255,122,209,0.24));
+      color: #041014; font-weight: 700; font-family: 'Syne';
+    }
+    .step h4 { margin: 0 0 4px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    .pricing { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .price-card { padding: 20px; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); position: relative; overflow: hidden; }
+    .price-card::after { content:""; position:absolute; inset:-30% 10%; background: radial-gradient(circle, rgba(122,243,255,0.25), transparent 40%); filter: blur(60px); opacity: 0.6; }
+    .price-card h3 { margin: 4px 0 10px; font-size: 20px; }
+    .price { font-size: 28px; font-weight: 700; margin: 8px 0; }
+    .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 10px; background: rgba(122,243,255,0.16); color: var(--accent); font-size: 12px; letter-spacing: 0.4px; }
+    ul.features { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; color: var(--muted); }
+    ul.features li { display: flex; gap: 8px; align-items: flex-start; }
+    ul.features li::before { content: "•"; color: var(--accent); margin-top: 0; }
+
+    .cta {
+      margin-top: 42px;
+      padding: 28px 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(120deg, rgba(122,243,255,0.18), rgba(255,122,209,0.12));
+      border: 1px solid rgba(255,255,255,0.18);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+    .cta h3 { margin: 0 0 6px; font-size: 24px; }
+    .cta p { margin: 0; color: #041014; font-weight: 600; }
+
+    footer { margin-top: 40px; padding: 12px 0 26px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--stroke); }
+
+    /* responsive tweaks */
+    @media (max-width: 720px) {
+      header { position: relative; }
+      nav { width: 100%; justify-content: flex-start; overflow-x: auto; }
+      .hero__metrics { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+      .visual-shell { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="halo"><span></span><span></span><span></span></div>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <div class="logo-mark">MF</div>
+        <div>
+          <div style="font-weight:700; font-size:16px;">MotionForge 3D</div>
+          <div style="color:var(--muted); font-size:12px;">Character Lab</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#showcase">Bộ sưu tập</a>
+        <a href="#pipeline">Quy trình</a>
+        <a href="#pricing">Bảng giá</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="pill">Live: bộ rig sẵn cho Unreal/Unity</div>
+        <h1>Nhân vật 3D chuyển động điện ảnh, sẵn sàng đưa vào pipeline của bạn.</h1>
+        <p>Chúng tôi thiết kế, rig và tối ưu nhân vật hoạt hình độ chân thực cao, tương thích game engine & film-grade render. Tải mẫu ngay hoặc đặt lịch xem demo chuyển động.</p>
+        <div class="hero__actions">
+          <a class="btn primary" href="#contact">Tải bộ mẫu</a>
+          <a class="btn ghost" href="#showcase">Xem gallery realtime</a>
+        </div>
+        <div class="hero__metrics">
+          <div class="metric"><strong>240+</strong><span>nhân vật có sẵn</span></div>
+          <div class="metric"><strong>8K/UDIM</strong><span>texture + PBR-ready</span></div>
+          <div class="metric"><strong>72 giờ</strong><span>bàn giao gói tuỳ chỉnh</span></div>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="visual-shell">
+          <div class="model-card">
+            <div class="model-top">
+              <div class="model-avatar"></div>
+              <div>
+                <div class="model-name">Nova Scout</div>
+                <div class="tag">Sci‑fi · FK/IK Rig</div>
+              </div>
+            </div>
+            <div class="card-meta">
+              <span><span class="small-dot"></span>Face blendshapes 72</span>
+              <span><span class="small-dot"></span>LOD0‑3</span>
+            </div>
+          </div>
+          <div class="model-card">
+            <div class="model-top">
+              <div class="model-avatar"></div>
+              <div>
+                <div class="model-name">Myth Weaver</div>
+                <div class="tag" style="color: var(--accent-2);">Stylized · UE5</div>
+              </div>
+            </div>
+            <div class="card-meta">
+              <span><span class="small-dot"></span>Niagara ready</span>
+              <span><span class="small-dot"></span>ARKit blend</span>
+            </div>
+          </div>
+          <div class="model-card">
+            <div class="model-top">
+              <div class="model-avatar"></div>
+              <div>
+                <div class="model-name">Atlas Runner</div>
+                <div class="tag" style="color: var(--accent-3);">Cinematic · Mocap</div>
+              </div>
+            </div>
+            <div class="card-meta">
+              <span><span class="small-dot"></span>Physically based cloth</span>
+              <span><span class="small-dot"></span>FBX / USDZ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="showcase">
+      <div class="section-header">
+        <div>
+          <div class="pill" style="background: rgba(255,122,209,0.12); color: var(--accent-2);">Signature Collection</div>
+          <h2>Chọn style, nhận file sẵn render.</h2>
+          <p class="sub">Mỗi nhân vật đều có rig sạch, vật liệu PBR, LUT đề xuất và preset lighting cho UE5, Unity HDRP, Blender. Không cần dọn dẹp lại topology.</p>
+        </div>
+        <a class="btn ghost" href="#contact">Yêu cầu style riêng</a>
+      </div>
+      <div class="grid cols-3">
+        <div class="showcase-card card">
+          <div class="label">Realistic</div>
+          <div class="style">Echo Division</div>
+          <div class="meta">8K skin, micro-normal pores, groom XGen → Alembic; body/face ARKit, 120 corrective shapes.</div>
+        </div>
+        <div class="showcase-card card">
+          <div class="label">Stylized</div>
+          <div class="style">Neon Alley</div>
+          <div class="meta">Toon shader preset, ramp textures, emission FX pass, cel-line baked; perfect cho cinematic cyberpunk.</div>
+        </div>
+        <div class="showcase-card card">
+          <div class="label">Creature</div>
+          <div class="style">Azure Drake</div>
+          <div class="meta">Quad wings rig, spline tail, dynamic muscles; texture tri-planar + subsurface. Ready cho mocap bay.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pipeline">
+      <div class="section-header">
+        <div>
+          <div class="pill" style="background: rgba(246,196,82,0.14); color: var(--accent-3);">Pipeline khép kín</div>
+          <h2>Nhận file đúng chuẩn studio, không thêm bước phát sinh.</h2>
+          <p class="sub">Từ concept → sculpt → retopo → rig → anim test → export. Chúng tôi giao kèm profile color, naming convention và scene clean-up scripts.</p>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="step">
+          <div class="icon">01</div>
+          <div>
+            <h4>Khóa style & silhouette</h4>
+            <p>Board mood nhanh, phê duyệt mesh proxy trong 12h. Giữ đúng tỉ lệ người thật hoặc stylized theo guideline.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="icon">02</div>
+          <div>
+            <h4>Rig sạch + test mocap</h4>
+            <p>Auto/hand key mix, IK‑FK match, face blendshape 52+; gửi kèm 3 clip mocap để bạn drop vào engine thử ngay.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="icon">03</div>
+          <div>
+            <h4>Bàn giao đa định dạng</h4>
+            <p>FBX (game), USD/UDIM (film), GLB (web/AR). Folder hoá theo pipeline, kèm preset import cho UE/Unity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-header">
+        <div>
+          <div class="pill" style="background: rgba(122,243,255,0.14); color: var(--accent);">Gói dịch vụ</div>
+          <h2>Chọn license phù hợp.</h2>
+          <p class="sub">Giá tham khảo cho nhân vật chuẩn 120k polys, rig full-body. Nhận báo giá chính xác sau khi chốt style & output.</p>
+        </div>
+      </div>
+      <div class="pricing">
+        <div class="price-card">
+          <div class="chip">Indie/Creator</div>
+          <h3>Creator License</h3>
+          <div class="price">$480 / nhân vật</div>
+          <ul class="features">
+            <li>Rig full-body, face 52 blendshape</li>
+            <li>Texture 4K PBR, LOD0‑2</li>
+            <li>Xuất FBX + GLB, preset import UE/Unity</li>
+            <li>1 vòng sửa, thời gian 5 ngày</li>
+          </ul>
+          <div class="hero__actions" style="margin-top:16px;">
+            <a class="btn primary" href="#contact">Đặt hàng</a>
+            <a class="btn ghost" href="#showcase">Xem mẫu</a>
+          </div>
+        </div>
+        <div class="price-card" style="border-color: rgba(255,122,209,0.4); box-shadow: 0 18px 55px rgba(255,122,209,0.22);">
+          <div class="chip" style="background: rgba(255,122,209,0.16); color: var(--accent-2);">Studio</div>
+          <h3>Studio License</h3>
+          <div class="price">$890 / nhân vật</div>
+          <ul class="features">
+            <li>Rig cinematic + corrective shapes 120+</li>
+            <li>Texture 8K UDIM, groom XGen → Alembic</li>
+            <li>Clip mocap thử + retarget file</li>
+            <li>2 vòng sửa, ưu tiên lịch, 72h turnaround</li>
+          </ul>
+          <div class="hero__actions" style="margin-top:16px;">
+            <a class="btn primary" href="#contact">Book slot</a>
+            <a class="btn ghost" href="#pipeline">Xem quy trình</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div>
+        <h3>Sẵn sàng nhận nhân vật tiếp theo.</h3>
+        <p>Gửi style, engine bạn dùng và deadline. Chúng tôi phản hồi trong 2h làm việc.</p>
+      </div>
+      <div class="hero__actions" style="margin:0;">
+        <a class="btn primary" href="mailto:hello@motionforge.studio?subject=Yeu%20cau%20nhan%20vat%203D">Gửi email</a>
+        <a class="btn ghost" href="https://cal.com" target="_blank">Đặt lịch 15 phút</a>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 MotionForge 3D · Studio cung cấp nhân vật hoạt hình & cinematic cho game, film, XR.
+    </footer>
+  </div>
+</body>
+</html>
